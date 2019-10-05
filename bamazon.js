@@ -1,6 +1,6 @@
 //initialize dependencies
 var mysql = require("mysql");
-var inquirer = requirer("inquirer");
+var inquirer = require("inquirer");
 
 
 //initialize the connection variable to sync with a MYSQL database
@@ -36,21 +36,55 @@ function loadProducts() {
 
 //prompt the user for a product id
 function promptCustomerForItem(){
+    
     inquirer
     .prompt([{
         type: "input",
         message: "What is the ID of the item you are searching for?",
-        name: "Item-id"
+        name: "id"
     }])
     .then(function (answer){
-        console.log("Searching for: " + answer.Item-id);
+        connection.query("SELECT * FROM products WHERE ?"
+        [{
+            id: answer.id
+        }], 
+        function (err, res) {
+            if (err) throw err;
+        console.log("Searching for: " + answer.id);
         promptCustomerForQuantity();
     })
-
+    })
 }
 
 //prompt customer for quantity
 function promptCustomerForQuantity(){
+    inquirer
+    .prompt([{
+        type: "input",
+        message: "How many would you like to purchase?",
+        name: "quantity"
+    }])
+    .then(function (answer){
+        if(stock_quantity < answer.quantity){
+            console.log("Insufficient quantity!");
+            loadProducts()
+        }
+        else{
+            connection.query(
+                "UPDATE products SET ? WHERE ?",
+                [
+                {
+                    stock_quantity: answer.quantity
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(res.affectedRows + "Thank You For Your Purchase!");
+                    loadProducts();
+                    
+                }
+                ])
+        }
+    })
 
 }
 
