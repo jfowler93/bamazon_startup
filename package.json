@@ -1,0 +1,26 @@
+{
+  "name": "bamazon_startup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bamazon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfowler93/bamazon_startup.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jfowler93/bamazon_startup/issues"
+  },
+  "homepage": "https://github.com/jfowler93/bamazon_startup#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "color": "^3.1.2",
+    "console.table": "^0.10.0",
+    "inquirer": "^7.0.0",
+    "mysql": "^2.17.1"
+  }
+}
