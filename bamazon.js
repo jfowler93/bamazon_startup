@@ -62,6 +62,7 @@ function promptCustomerForItem() {
                 }
                 else {
                     var newQuantity = chosenItem.stock_quantity - parseInt(answer.amount);
+                    var totalCost = chosenItem.price * answer.amount;
                     connection.query(
                         "UPDATE products SET ? WHERE ?",
                         [
@@ -75,8 +76,8 @@ function promptCustomerForItem() {
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log("Thank you for your purchase!");
-                            loadProducts();
+                            console.log("Thank you for your purchase! Your total cost was " + totalCost);
+                            checkIfShouldExit();
                         }
                     );
                 }
@@ -84,49 +85,25 @@ function promptCustomerForItem() {
     })
 }
 
-// //prompt customer for quantity
-// function promptCustomerForQuantity(){
-//     inquirer
-//     .prompt([{
-//         type: "input",
-//         message: "How many would you like to purchase?",
-//         name: "quantity"
-//     }])
-//     .then(function (answer){
-//         if(stock_quantity < answer.quantity){
-//             console.log("Insufficient quantity!");
-//             loadProducts()
-//         }
-//         else{
-//             connection.query(
-//                 "UPDATE products SET ? WHERE ?",
-//                 [
-//                 {
-//                     stock_quantity: answer.quantity
-//                 },
-//                 function (err, res) {
-//                     if (err) throw err;
-//                     console.log(res.affectedRows + "Thank You For Your Purchase!");
-//                     loadProducts();
-
-//                 }
-//                 ])
-//         }
-//     })
-
-// }
-
-//purchase function to buy desired item
-// function makePurchase(){
-
-// }
-
-// //check the inventory to see if the user choice exists in inventory
-// function checkInventory(){
-
-// }
-
-// //check to see if user wants to exit or continue (optional)
-// function checkIfShouldExit(){
-
-// 
+//check to see if user wants to exit or continue (optional)
+function checkIfShouldExit() {
+    inquirer
+        .prompt(
+            {
+                type: "list",
+                message: "Would you Like to continue shopping?",
+                choices: ["Yes", "No"],
+                name: "shopPrompt"
+            })
+        .then(function (answer) {
+            if (answer.shopPrompt === "Yes") {
+                console.log("------------------------------");
+                console.log("Loading Product List...");
+                console.log("------------------------------");
+                loadProducts()
+            }
+            else {
+                connection.end();
+            }
+        })
+}
