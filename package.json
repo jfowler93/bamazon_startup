@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jfowler93/bamazon_startup#readme",
   "dependencies": {
+    "chalk": "^2.4.2",
     "cli-table": "^0.3.1",
     "color": "^3.1.2",
     "console.table": "^0.10.0",

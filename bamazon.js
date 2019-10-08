@@ -1,6 +1,7 @@
 //initialize dependencies
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+const chalk = require('chalk');
 
 
 //initialize the connection variable to sync with a MYSQL database
@@ -25,6 +26,7 @@ connection.connect(function (err) {
 function loadProducts() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err
+        console.log(chalk.blue('Welcome to Bamazon!'));
         //displays items in a table
         console.table(res);
 
